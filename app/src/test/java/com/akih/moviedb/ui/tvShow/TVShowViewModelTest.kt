@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.akih.moviedb.data.MovieRepository
-import com.akih.moviedb.data.source.remote.response.TVShow
+import com.akih.moviedb.data.source.remote.response.TVShowResponse
 import com.akih.moviedb.utils.DummyData
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
@@ -28,7 +28,7 @@ class TVShowViewModelTest {
 
 
     @Mock
-    private lateinit var observer: Observer<List<TVShow>>
+    private lateinit var observer: Observer<List<TVShowResponse>>
 
 
     @Before
@@ -39,7 +39,7 @@ class TVShowViewModelTest {
     @Test
     fun testGetAllTVShow() {
         val mDummy = DummyData.fetchAllTVShow()
-        val mTv = MutableLiveData<List<TVShow>>()
+        val mTv = MutableLiveData<List<TVShowResponse>>()
         mTv.value = mDummy
         Mockito.`when`(movieRepository.getAllTVShow()).thenReturn(mTv)
         val tvShows = viewModel.getAllTVShow().value

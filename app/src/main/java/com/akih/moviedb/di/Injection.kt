@@ -10,10 +10,10 @@ import com.akih.moviedb.utils.JSONHelper
 
 object Injection {
     fun provideRepository(context: Context): MovieRepository {
-        val databaseApp = MovieRoomDatabase.getDatabase(context)
+        val database = MovieRoomDatabase.getInstance(context)
 
         val remoteDataSource = RemoteDataSource.getInstance(JSONHelper(context))
-        val localDataSource = LocalMovieDataSource.getInstance(databaseApp.movieDao())
+        val localDataSource = LocalMovieDataSource.getInstance(database.movieDao())
         val appExecutor = AppExecutor()
 
         return MovieRepository.getInstance(remoteDataSource, localDataSource, appExecutor)

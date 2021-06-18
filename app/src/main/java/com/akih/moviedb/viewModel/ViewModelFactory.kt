@@ -7,6 +7,8 @@ import com.akih.moviedb.data.MovieRepository
 import com.akih.moviedb.di.Injection
 import com.akih.moviedb.ui.detail.movie.DetailMovieViewModel
 import com.akih.moviedb.ui.detail.tvShow.DetailTVShowViewModel
+import com.akih.moviedb.ui.favorite.movieFavorite.FavoriteMovieViewModel
+import com.akih.moviedb.ui.favorite.tvShowFavorite.FavoriteTVShowViewModel
 import com.akih.moviedb.ui.movie.MovieViewModel
 import com.akih.moviedb.ui.tvShow.TVShowViewModel
 
@@ -38,6 +40,12 @@ class ViewModelFactory private constructor(private val mMovieRepository: MovieRe
             }
             modelClass.isAssignableFrom(DetailTVShowViewModel::class.java) -> {
                 DetailTVShowViewModel(mMovieRepository) as T
+            }
+            modelClass.isAssignableFrom(FavoriteMovieViewModel::class.java) -> {
+                FavoriteMovieViewModel(mMovieRepository) as T
+            }
+            modelClass.isAssignableFrom(FavoriteTVShowViewModel::class.java) -> {
+                FavoriteTVShowViewModel(mMovieRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

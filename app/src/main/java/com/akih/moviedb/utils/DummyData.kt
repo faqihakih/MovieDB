@@ -1,13 +1,13 @@
 package com.akih.moviedb.utils
 
-import com.akih.moviedb.data.source.remote.response.Movie
-import com.akih.moviedb.data.source.remote.response.TVShow
+import com.akih.moviedb.data.source.remote.response.MovieResponse
+import com.akih.moviedb.data.source.remote.response.TVShowResponse
 
 object DummyData {
-    fun fetchAllMovie():ArrayList<Movie>{
-        val movies = ArrayList<Movie>()
+    fun fetchAllMovie():ArrayList<MovieResponse>{
+        val movies = ArrayList<MovieResponse>()
         movies.add(
-                Movie(
+                MovieResponse(
                         1,
                         "Mortal Kombat",
                         "2021",
@@ -20,7 +20,7 @@ object DummyData {
                 )
         )
         movies.add(
-                Movie(
+                MovieResponse(
                         2,
                         "Zack Snyder's Justice League",
                         "2021",
@@ -33,7 +33,7 @@ object DummyData {
                 )
         )
         movies.add(
-                Movie(
+                MovieResponse(
                         3,
                         "Nobody",
                         "2021",
@@ -46,7 +46,7 @@ object DummyData {
                 )
         )
         movies.add(
-                Movie(
+                MovieResponse(
                         4,
                         "The Marksman",
                         "2021",
@@ -59,7 +59,7 @@ object DummyData {
                 )
         )
         movies.add(
-                Movie(
+                MovieResponse(
                         5,
                         "Chaos Walking",
                         "2021",
@@ -72,7 +72,7 @@ object DummyData {
                 )
         )
         movies.add(
-                Movie(
+                MovieResponse(
                         6,
                         "Wonder Woman 1984",
                         "2020",
@@ -85,7 +85,7 @@ object DummyData {
                 )
         )
         movies.add(
-                Movie(
+                MovieResponse(
                         7,
                         "The Little Things",
                         "2021",
@@ -98,7 +98,7 @@ object DummyData {
                 )
         )
         movies.add(
-                Movie(
+                MovieResponse(
                         8,
                         "Honest Thief",
                         "2020",
@@ -111,7 +111,7 @@ object DummyData {
                 )
         )
         movies.add(
-                Movie(
+                MovieResponse(
                         9,
                         "Joker",
                         "2019",
@@ -124,7 +124,7 @@ object DummyData {
                 )
         )
         movies.add(
-                Movie(
+                MovieResponse(
                         10,
                         "Sherlock Holmes: A Game of Shadows",
                         "2011",
@@ -139,11 +139,11 @@ object DummyData {
         return movies
     }
 
-    fun fetchAllTVShow() : ArrayList<TVShow>{
-        val tvShows = ArrayList<TVShow>()
+    fun fetchAllTVShow() : ArrayList<TVShowResponse>{
+        val tvShows = ArrayList<TVShowResponse>()
 
         tvShows.add(
-                TVShow(
+                TVShowResponse(
                         1,
                         "The Falcon and the Winter Soldier",
                         "2021",
@@ -156,7 +156,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShow(
+                TVShowResponse(
                         2,
                         "The Good Doctor",
                         "2017",
@@ -169,7 +169,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShow(
+                TVShowResponse(
                         3,
                         "WandaVision",
                         "2021",
@@ -182,7 +182,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShow(
+                TVShowResponse(
                         4,
                         "The Walking Dead",
                         "2010",
@@ -195,7 +195,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShow(
+                TVShowResponse(
                         5,
                         "Game of Thrones",
                         "2011",
@@ -208,7 +208,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShow(
+                TVShowResponse(
                         6,
                         "Marvel Studios: Legends",
                         "2021",
@@ -221,7 +221,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShow(
+                TVShowResponse(
                         7,
                         "I Am...",
                         "2019",
@@ -234,7 +234,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShow(
+                TVShowResponse(
                         8,
                         "Elite",
                         "2018",
@@ -247,7 +247,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShow(
+                TVShowResponse(
                         9,
                         "Peaky Blinders",
                         "2013",
@@ -260,7 +260,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShow(
+                TVShowResponse(
                         10,
                         "Sherlock",
                         "2010",

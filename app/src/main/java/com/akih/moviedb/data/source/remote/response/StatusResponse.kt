@@ -1,4 +1,4 @@
-package com.akih.moviedb.utils
+package com.akih.moviedb.data.source.remote.response
 
 enum class StatusResponse {
     SUCCESS,

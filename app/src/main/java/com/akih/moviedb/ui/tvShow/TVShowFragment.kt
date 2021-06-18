@@ -7,16 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.akih.moviedb.data.source.local.room.TVShow
+import com.akih.moviedb.data.source.local.entity.TVShowEntity
 import com.akih.moviedb.databinding.FragmentTVShowBinding
 import com.akih.moviedb.ui.detail.tvShow.DetailTVShowActivity
-import com.akih.moviedb.ui.movie.MovieAdapter
-import com.akih.moviedb.ui.movie.MovieViewModel
-import com.akih.moviedb.utils.Status
 import com.akih.moviedb.viewModel.ViewModelFactory
+import com.akih.moviedb.vo.Status
 
 class TVShowFragment : Fragment(), TVShowAdapterInterface {
     private var _binding : FragmentTVShowBinding? = null
@@ -53,7 +50,7 @@ class TVShowFragment : Fragment(), TVShowAdapterInterface {
                     Status.SUCCESS -> {
                         val movieData = movie.data
                         if (movieData != null) {
-                            mAdapter.setList(movieData)
+                            mAdapter.submitList(movieData)
                         }
                         mAdapter.submitList(movie.data)
                         mAdapter.notifyDataSetChanged()
@@ -66,13 +63,13 @@ class TVShowFragment : Fragment(), TVShowAdapterInterface {
         })
     }
 
-    override fun onTap(tvShow: TVShow) {
+    override fun onTap(tvShow: TVShowEntity) {
         startActivity(Intent(activity, DetailTVShowActivity::class.java).also {
             it.putExtra(DetailTVShowActivity.EXTRA_ID, tvShow.id)
         })
     }
 
-    override fun onLongTap(tvShow: TVShow) {
+    override fun onLongTap(tvShow: TVShowEntity) {
         Toast.makeText(context, "You Click On ${tvShow.title} TV Show", Toast.LENGTH_LONG).show()
     }
 }

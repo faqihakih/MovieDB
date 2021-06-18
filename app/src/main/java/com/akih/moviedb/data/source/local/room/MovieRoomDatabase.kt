@@ -7,22 +7,23 @@ import androidx.room.RoomDatabase
 import com.akih.moviedb.data.source.local.entity.MovieEntity
 import com.akih.moviedb.data.source.local.entity.TVShowEntity
 
-@Database(entities = [Movie::class, TVShow::class], version = 1)
-abstract class MovieRoomDatabase : RoomDatabase(){
+@Database(entities = [MovieEntity::class, TVShowEntity::class], version = 1)
+abstract class MovieRoomDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDAO
+
     companion object {
         @Volatile
         private var INSTANCE: MovieRoomDatabase? = null
-        @JvmStatic
-        fun getDatabase(context: Context): MovieRoomDatabase {
-            if (INSTANCE == null) {
-                synchronized(MovieRoomDatabase::class.java) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext,
-                        MovieRoomDatabase::class.java, "movie_database")
-                        .build()
+
+        fun getInstance(context: Context) : MovieRoomDatabase =
+                INSTANCE ?: synchronized(this) {
+                    Room.databaseBuilder(
+                            context.applicationContext,
+                            MovieRoomDatabase::class.java,
+                            "Movie.db"
+                    ).build().apply {
+                        INSTANCE = this
+                    }
                 }
-            }
-            return INSTANCE as MovieRoomDatabase
-        }
     }
 }

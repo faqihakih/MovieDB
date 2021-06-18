@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.akih.moviedb.data.MovieRepository
-import com.akih.moviedb.data.source.local.room.Movie
-import com.akih.moviedb.data.source.local.room.TVShow
-import com.akih.moviedb.utils.Resource
+import com.akih.moviedb.data.source.local.entity.TVShowEntity
+import com.akih.moviedb.vo.Resource
 
 class DetailTVShowViewModel (private val movieRepository: MovieRepository) : ViewModel() {
     private var showId = MutableLiveData<Int>()
@@ -15,7 +14,7 @@ class DetailTVShowViewModel (private val movieRepository: MovieRepository) : Vie
         this.showId.value = moviesId
     }
 
-    var getTVShow : LiveData<Resource<TVShow>> = Transformations.switchMap(showId) { id ->
+    var getTVShow : LiveData<Resource<TVShowEntity>> = Transformations.switchMap(showId) { id ->
         movieRepository.getTVShowDetail(id)
     }
 

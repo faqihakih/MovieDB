@@ -5,14 +5,17 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import android.widget.ToggleButton
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.akih.moviedb.data.source.local.room.Movie
+import com.akih.moviedb.data.source.local.entity.MovieEntity
 import com.akih.moviedb.databinding.ActivityDetailMovieBinding
-import com.akih.moviedb.utils.Resource
-import com.akih.moviedb.utils.Status
+import com.akih.moviedb.vo.Resource
+import com.akih.moviedb.vo.Status
 import com.akih.moviedb.viewModel.ViewModelFactory
 import com.bumptech.glide.Glide
 
@@ -20,7 +23,7 @@ class DetailMovieActivity : AppCompatActivity() {
     private lateinit var movieViewModel: DetailMovieViewModel
     private lateinit var binding: ActivityDetailMovieBinding
     private lateinit var factory : ViewModelFactory
-    private lateinit var movieEntity: Movie
+    private lateinit var movieEntity: MovieEntity
     private var setFavorite : ToggleButton? = null
     private var stateFavorite: Boolean = false
 
@@ -45,12 +48,29 @@ class DetailMovieActivity : AppCompatActivity() {
         val id = intent.extras
         if (id != null){
             val data = id.getInt(EXTRA_ID, 0)
-            movieViewModel.setSelectedMovie(data)
+            if (data != null){
+                movieViewModel.setSelectedMovie(data)
+
+                movieViewModel.getMovie.observe(this, { dataMovie ->
+                    if (dataMovie != null) {
+                        when(dataMovie.status) {
+                            Status.SUCCESS -> if (dataMovie.data != null) {
+                                Log.d("moviesDetail", dataMovie.toString())
+                                initView(dataMovie.data)
+                            }
+                            Status.ERROR -> {
+                                Log.d("moviesDetail", dataMovie.toString())
+                                Toast.makeText(applicationContext, "Maaf, Ada Error", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                })
+            }
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun initView(itemData: Movie){
+    private fun initView(itemData: MovieEntity){
         Glide.with(this.applicationContext).load(itemData.banner).into(binding.ivBanner)
         binding.apply {
             tvTitle.text = "${itemData.title} - (${itemData.year})"
@@ -66,7 +86,7 @@ class DetailMovieActivity : AppCompatActivity() {
         movieViewModel.getMovie.observe(this, Observer { watchTrailer(it) })
     }
 
-    private fun setFav(movie: Resource<Movie>) {
+    private fun setFav(movie: Resource<MovieEntity>) {
         if(movie != null){
             when(movie.status){
                 Status.SUCCESS -> if(movie.data != null){
@@ -110,17 +130,17 @@ class DetailMovieActivity : AppCompatActivity() {
         movieViewModel.setFavoritMovie()
     }
 
-    private fun setFavorit(stateFavorit: Boolean) {
-        if(setFavorite == null)return
-        val click = binding.toggleButton
-        if(!stateFavorit){
-            click.isChecked = true
-        }else{
-            click.isChecked = false
+    private fun setFavorit(state: Boolean){
+        if (setFavorite == null) return
+        val menuItem = binding.toggleButton
+        if (state){
+            menuItem?.isChecked = true
+        }else {
+            menuItem?.isChecked = false
         }
     }
 
-    private fun watchTrailer(itemData: Resource<Movie>){
+    private fun watchTrailer(itemData: Resource<MovieEntity>){
         binding.btnTrailer.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(movieEntity.trailer)))
         }

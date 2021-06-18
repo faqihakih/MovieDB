@@ -1,4 +1,4 @@
-package com.akih.moviedb.utils
+package com.akih.moviedb.data.source.remote.response
 
 class ApiResponse<T>(val status: StatusResponse, val body: T, val message: String?) {
     companion object {

@@ -9,11 +9,11 @@ import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.akih.moviedb.data.source.local.room.TVShow
+import com.akih.moviedb.data.source.local.entity.TVShowEntity
 import com.akih.moviedb.databinding.ActivityDetailTVShowBinding
 import com.akih.moviedb.ui.detail.movie.DetailMovieActivity
-import com.akih.moviedb.utils.Resource
-import com.akih.moviedb.utils.Status
+import com.akih.moviedb.vo.Resource
+import com.akih.moviedb.vo.Status
 import com.akih.moviedb.viewModel.ViewModelFactory
 import com.bumptech.glide.Glide
 
@@ -21,7 +21,7 @@ class DetailTVShowActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailTVShowBinding
     private lateinit var viewModel: DetailTVShowViewModel
     private lateinit var factory: ViewModelFactory
-    private lateinit var tvShowEntity: TVShow
+    private lateinit var tvShowEntity: TVShowEntity
     private var setFavorite : ToggleButton? = null
     private var stateFavorite: Boolean = false
 
@@ -57,7 +57,7 @@ class DetailTVShowActivity : AppCompatActivity() {
         }
     }
 
-    private fun setFav(movie: Resource<TVShow>) {
+    private fun setFav(movie: Resource<TVShowEntity>) {
         if(movie != null){
             when(movie.status){
                 Status.SUCCESS -> if(movie.data != null){
@@ -79,7 +79,7 @@ class DetailTVShowActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun initView(itemData: TVShow){
+    private fun initView(itemData: TVShowEntity){
         Glide.with(this.applicationContext).load(itemData.banner).into(binding.ivBanner)
         binding.apply {
             tvTitle.text = "${itemData.title} - (${itemData.year})"
@@ -96,11 +96,9 @@ class DetailTVShowActivity : AppCompatActivity() {
                 when (movie.status) {
                     Status.SUCCESS -> if (movie.data != null) {
                         if(movie.data.favorite == false){
-                            movie.data.favorite = true
-                            setFavorit(movie.data.favorite)
+                            setFavorit(true)
                         }else{
-                            movie.data.favorite = false
-                            setFavorit(movie.data.favorite)
+                            setFavorit(false)
                         }
                     }
                     Status.ERROR -> {
@@ -123,7 +121,7 @@ class DetailTVShowActivity : AppCompatActivity() {
         }
     }
 
-    private fun watchTrailer(itemData: Resource<TVShow>){
+    private fun watchTrailer(itemData: Resource<TVShowEntity>){
         binding.btnTrailer.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(tvShowEntity.trailer)))
         }

@@ -1,4 +1,4 @@
-package com.akih.moviedb.utils
+package com.akih.moviedb.vo
 
 enum class Status {
     SUCCESS,

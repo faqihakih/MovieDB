@@ -4,11 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.akih.moviedb.data.source.local.entity.MovieEntity
 import com.akih.moviedb.data.source.local.entity.TVShowEntity
-import com.akih.moviedb.data.source.local.room.Movie
-import com.akih.moviedb.data.source.local.room.TVShow
-import com.akih.moviedb.utils.ApiResponse
+import com.akih.moviedb.data.source.remote.response.MovieResponse
+import com.akih.moviedb.data.source.remote.response.TVShowResponse
+import com.akih.moviedb.data.source.remote.response.ApiResponse
 import com.akih.moviedb.utils.JSONHelper
-import com.akih.moviedb.utils.Resource
 
 class RemoteDataSource private constructor(private val jsonHelper: JSONHelper) {
 
@@ -21,46 +20,46 @@ class RemoteDataSource private constructor(private val jsonHelper: JSONHelper) {
                 RemoteDataSource(helper).apply { instance = this }
             }
     }
-    fun getMovie(): LiveData<ApiResponse<List<Movie>>> {
-        val resultMovie = MutableLiveData<ApiResponse<List<Movie>>>()
+    fun getMovie(): LiveData<ApiResponse<List<MovieEntity>>> {
+        val resultMovie = MutableLiveData<ApiResponse<List<MovieEntity>>>()
         resultMovie.value = ApiResponse.success(jsonHelper.loadMovie())
         return resultMovie
     }
 
     interface LoadMovie{
-        fun onAllMovieReceived(myMovieResponse: List<Movie>)
+        fun onAllMovieReceived(myMovieResponse: List<MovieResponse>)
     }
 
-    fun getShow(): LiveData<ApiResponse<List<TVShow>>> {
-        val resultTv = MutableLiveData<ApiResponse<List<TVShow>>>()
+    fun getShow(): LiveData<ApiResponse<List<TVShowEntity>>> {
+        val resultTv = MutableLiveData<ApiResponse<List<TVShowEntity>>>()
         resultTv.value = ApiResponse.success(jsonHelper.loadTVShow())
         return resultTv
     }
 
     interface LoadShow{
-        fun onAllMTvReceived(myTvResponse: List<TVShow>)
+        fun onAllMTvReceived(myTvResponse: List<TVShowResponse>)
     }
 
 
-    fun getMovieDetail(id:Int): LiveData<ApiResponse<Movie>> {
-        val myMovieDetail = MutableLiveData<ApiResponse<Movie>>()
+    fun getMovieDetail(id:Int): LiveData<ApiResponse<MovieEntity>> {
+        val myMovieDetail = MutableLiveData<ApiResponse<MovieEntity>>()
         myMovieDetail.value = ApiResponse.success(jsonHelper.loadMovieDetail(id))
         return myMovieDetail
     }
 
     interface loadDetailMovie{
-        fun onDetailMyMovie(myDetailMovieResponse : Movie)
+        fun onDetailMyMovie(myDetailMovieResponse : MovieResponse)
     }
 
 
-    fun getShowDetail(id:Int): LiveData<ApiResponse<TVShow>> {
-        val myTvDetail = MutableLiveData<ApiResponse<TVShow>>()
+    fun getShowDetail(id:Int): LiveData<ApiResponse<TVShowEntity>> {
+        val myTvDetail = MutableLiveData<ApiResponse<TVShowEntity>>()
         myTvDetail.value = ApiResponse.success(jsonHelper.loadTVShowDetail(id))
         return myTvDetail
     }
 
     interface loadDetailShow{
-        fun onDetailMyTv(myDetailTvesponse : TVShow)
+        fun onDetailMyTv(myDetailTvesponse : TVShowResponse)
     }
 
 }

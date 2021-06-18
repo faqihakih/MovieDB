@@ -1,4 +1,4 @@
-package com.akih.moviedb.ui.tvShow
+package com.akih.moviedb.ui.favorite.tvShowFavorite
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import com.akih.moviedb.data.source.local.entity.TVShowEntity
 import com.akih.moviedb.databinding.ItemCardBinding
 import com.bumptech.glide.Glide
 
-class TVShowAdapter(private val tvShowAdapterInterface: TVShowAdapterInterface) : PagedListAdapter<TVShowEntity, TVShowAdapter.TVShowViewHolder>(CALLBACK){
+class TVShowAdapter(private val tvShowAdapterInterface: TVShowAdapterInterface) : PagedListAdapter<TVShowEntity, TVShowAdapter.TVShowViewHolder>(TVShowAdapter.CALLBACK){
 
     companion object{
         private val CALLBACK = object : DiffUtil.ItemCallback<TVShowEntity>(){

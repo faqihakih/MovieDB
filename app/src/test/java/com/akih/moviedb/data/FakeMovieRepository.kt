@@ -3,18 +3,18 @@ package com.akih.moviedb.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.akih.moviedb.data.source.remote.RemoteDataSource
-import com.akih.moviedb.data.source.remote.response.Movie
-import com.akih.moviedb.data.source.remote.response.TVShow
+import com.akih.moviedb.data.source.remote.response.MovieResponse
+import com.akih.moviedb.data.source.remote.response.TVShowResponse
 
 class FakeMovieRepository(private val remoteDataSource: RemoteDataSource) : MovieDataSource {
 
-    override fun getAllMovie(): LiveData<List<Movie>> {
-        val movieResponse = MutableLiveData<List<Movie>>()
+    override fun getAllMovie(): LiveData<List<MovieResponse>> {
+        val movieResponse = MutableLiveData<List<MovieResponse>>()
         remoteDataSource.getAllMovies(object : RemoteDataSource.LoadMoviesCallback {
-            override fun onAllMoviesReceived(moviesResponses: List<Movie>) {
-                val listMovie = ArrayList<Movie>()
+            override fun onAllMoviesReceived(moviesResponses: List<MovieResponse>) {
+                val listMovie = ArrayList<MovieResponse>()
                 for (response in moviesResponses) {
-                    val movie = Movie(
+                    val movie = MovieResponse(
                             response.id,
                             response.title,
                             response.year,
@@ -34,13 +34,13 @@ class FakeMovieRepository(private val remoteDataSource: RemoteDataSource) : Movi
         return movieResponse
     }
 
-    override fun getAllTVShow(): LiveData<List<TVShow>> {
-        val tvShowResponse = MutableLiveData<List<TVShow>>()
+    override fun getAllTVShow(): LiveData<List<TVShowResponse>> {
+        val tvShowResponse = MutableLiveData<List<TVShowResponse>>()
         remoteDataSource.getAllTVShow(object : RemoteDataSource.LoadTVShowCallback {
-            override fun onAllTVShowReceived(tvShowResponses: List<TVShow>){
-                val listTVShow = ArrayList<TVShow>()
+            override fun onAllTVShowReceived(tvShowResponses: List<TVShowResponse>){
+                val listTVShow = ArrayList<TVShowResponse>()
                 for (response in tvShowResponses) {
-                    val tvShow = TVShow(
+                    val tvShow = TVShowResponse(
                             response.id,
                             response.title,
                             response.year,
@@ -60,12 +60,12 @@ class FakeMovieRepository(private val remoteDataSource: RemoteDataSource) : Movi
         return tvShowResponse
     }
 
-    override fun getMovieDetail(MovieId: Int): LiveData<Movie> {
-        val movieDetailResponse = MutableLiveData<Movie>()
+    override fun getMovieDetail(MovieId: Int): LiveData<MovieResponse> {
+        val movieDetailResponse = MutableLiveData<MovieResponse>()
 
         remoteDataSource.getMoviesDetail(MovieId, object : RemoteDataSource.LoadMoviesDetailCallback{
-            override fun onAllMoviesDetailReceived(movieDetailResponses: Movie) {
-                val movieDetail = Movie(
+            override fun onAllMoviesDetailReceived(movieDetailResponses: MovieResponse) {
+                val movieDetail = MovieResponse(
                         movieDetailResponses.id,
                         movieDetailResponses.title,
                         movieDetailResponses.year,
@@ -82,12 +82,12 @@ class FakeMovieRepository(private val remoteDataSource: RemoteDataSource) : Movi
         return movieDetailResponse
     }
 
-    override fun getTVShowDetail(TVShowId: Int): LiveData<TVShow> {
-        val tvShowDetailResponse = MutableLiveData<TVShow>()
+    override fun getTVShowDetail(TVShowId: Int): LiveData<TVShowResponse> {
+        val tvShowDetailResponse = MutableLiveData<TVShowResponse>()
 
         remoteDataSource.getTVShowDetail(TVShowId, object : RemoteDataSource.LoadTVShowDetailCallback{
-            override fun onAllTVShowDetailReceived(tvShowDetailResponses: TVShow) {
-                val tvShowDetail = TVShow(
+            override fun onAllTVShowDetailReceived(tvShowDetailResponses: TVShowResponse) {
+                val tvShowDetail = TVShowResponse(
                         tvShowDetailResponses.id,
                         tvShowDetailResponses.title,
                         tvShowDetailResponses.year,

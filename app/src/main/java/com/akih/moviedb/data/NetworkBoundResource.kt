@@ -1,7 +1,11 @@
-package com.akih.moviedb.utils
+package com.akih.moviedb.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import com.akih.moviedb.data.source.remote.response.ApiResponse
+import com.akih.moviedb.utils.AppExecutor
+import com.akih.moviedb.vo.Resource
+import com.akih.moviedb.data.source.remote.response.StatusResponse
 
 abstract class NetworkBoundResource <ResultType, RequestType>(private val appExecutor: AppExecutor) {
 

@@ -26,7 +26,7 @@ class FavoriteViewPagerAdapter(private val context: Context, fragmentManager: Fr
             FavoriteTVShowFragment()
         }
         fragment.arguments = this.fragmentBundle
-        return fragment as Fragment
+        return fragment
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

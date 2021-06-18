@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.akih.moviedb.data.MovieRepository
-import com.akih.moviedb.data.source.remote.response.TVShow
+import com.akih.moviedb.data.source.remote.response.TVShowResponse
 import com.akih.moviedb.utils.DummyData
 import com.nhaarman.mockitokotlin2.verify
 import junit.framework.TestCase
@@ -30,7 +30,7 @@ class DetailTVShowViewModelTest {
     lateinit var movieRepository: MovieRepository
 
     @Mock
-    private lateinit var tvObserver: Observer<TVShow>
+    private lateinit var tvObserver: Observer<TVShowResponse>
 
     @Before
     fun setUp() {
@@ -40,11 +40,11 @@ class DetailTVShowViewModelTest {
     
     @Test
     fun getTVShow(){
-        val mTv = MutableLiveData<TVShow>()
+        val mTv = MutableLiveData<TVShowResponse>()
         mTv.value = dummyTVShow
 
         Mockito.`when`(movieRepository.getTVShowDetail(tvShowId)).thenReturn(mTv)
-        val dataTVShow = viewModel.getTVShow().value as TVShow
+        val dataTVShow = viewModel.getTVShow().value as TVShowResponse
         verify(movieRepository).getTVShowDetail(tvShowId)
         viewModel.getTVShow().observeForever(tvObserver)
         verify(tvObserver).onChanged(dummyTVShow)

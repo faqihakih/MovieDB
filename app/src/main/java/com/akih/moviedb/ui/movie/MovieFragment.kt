@@ -2,22 +2,19 @@ package com.akih.moviedb.ui.movie
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.akih.moviedb.data.source.local.entity.MovieEntity
-import com.akih.moviedb.data.source.local.room.Movie
 import com.akih.moviedb.databinding.FragmentMovieBinding
 import com.akih.moviedb.ui.detail.movie.DetailMovieActivity
-import com.akih.moviedb.utils.Resource
-import com.akih.moviedb.utils.Status
 import com.akih.moviedb.viewModel.ViewModelFactory
+import com.akih.moviedb.vo.Status
 
 class MovieFragment : Fragment(), MovieAdapterInterface {
     private var _binding : FragmentMovieBinding? = null
@@ -55,12 +52,13 @@ class MovieFragment : Fragment(), MovieAdapterInterface {
                     Status.SUCCESS -> {
                         val movieData = movie.data
                         if (movieData != null) {
-                            mAdapter.setList(movieData)
+                            mAdapter.submitList(movieData)
                         }
                         mAdapter.submitList(movie.data)
                         mAdapter.notifyDataSetChanged()
                     }
                     Status.ERROR ->{
+                        Log.d("MoviesTest", movie.toString())
                         Toast.makeText(context,"Error", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -68,13 +66,13 @@ class MovieFragment : Fragment(), MovieAdapterInterface {
         })
     }
 
-    override fun onTap(movie: Movie) {
+    override fun onTap(movie: MovieEntity) {
         startActivity(Intent(activity, DetailMovieActivity::class.java).also {
             it.putExtra(DetailMovieActivity.EXTRA_ID, movie.id)
         })
     }
 
-    override fun onLongTap(movie: Movie) {
+    override fun onLongTap(movie: MovieEntity) {
         Toast.makeText(context, "You Click On ${movie.title} Movie", Toast.LENGTH_LONG).show()
     }
 }

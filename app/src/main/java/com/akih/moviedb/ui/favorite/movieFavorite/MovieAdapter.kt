@@ -1,4 +1,4 @@
-package com.akih.moviedb.ui.movie
+package com.akih.moviedb.ui.favorite.movieFavorite
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -25,7 +25,6 @@ class MovieAdapter(private val movieAdapterInterface: MovieAdapterInterface) : P
 
         }
     }
-
     inner class MovieViewHolder(private val binding : ItemCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: MovieEntity){
             binding.root.setOnClickListener { movieAdapterInterface.onTap(movie) }

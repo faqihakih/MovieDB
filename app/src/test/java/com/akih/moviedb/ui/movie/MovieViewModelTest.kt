@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.akih.moviedb.data.MovieRepository
-import com.akih.moviedb.data.source.remote.response.Movie
+import com.akih.moviedb.data.source.remote.response.MovieResponse
 import com.akih.moviedb.utils.DummyData
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
@@ -29,7 +29,7 @@ class MovieViewModelTest {
 
 
     @Mock
-    private lateinit var observer: Observer<List<Movie>>
+    private lateinit var observer: Observer<List<MovieResponse>>
     @Before
     fun setUp(){
         viewModel = MovieViewModel(movieRepository)
@@ -38,7 +38,7 @@ class MovieViewModelTest {
     @Test
     fun testGetAllMovie() {
         val dummyData = DummyData.fetchAllMovie()
-        val mMovie = MutableLiveData<List<Movie>>()
+        val mMovie = MutableLiveData<List<MovieResponse>>()
         mMovie.value = dummyData
 
         Mockito.`when`(movieRepository.getAllMovie()).thenReturn(mMovie)

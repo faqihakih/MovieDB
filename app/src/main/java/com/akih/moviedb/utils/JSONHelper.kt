@@ -2,8 +2,9 @@ package com.akih.moviedb.utils
 
 import android.content.Context
 import com.akih.moviedb.data.source.local.entity.MovieEntity
-import com.akih.moviedb.data.source.local.room.Movie
-import com.akih.moviedb.data.source.local.room.TVShow
+import com.akih.moviedb.data.source.local.entity.TVShowEntity
+import com.akih.moviedb.data.source.remote.response.MovieResponse
+import com.akih.moviedb.data.source.remote.response.TVShowResponse
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -23,8 +24,8 @@ class JSONHelper(private val context: Context) {
         }
     }
 
-    fun loadMovie(): List<Movie> {
-        val list = ArrayList<Movie>()
+    fun loadMovie(): List<MovieEntity> {
+        val list = ArrayList<MovieEntity>()
         try {
             val responseObject = JSONObject(parsingFileToString("movies.json").toString())
             val listArray = responseObject.getJSONArray("movies")
@@ -41,7 +42,7 @@ class JSONHelper(private val context: Context) {
                 val banner = movie.getString("banner")
                 val trailer = movie.getString("trailer")
 
-                val movieResponse = Movie(id, title, year, duration, rating, genre, synopsis, banner, trailer)
+                val movieResponse = MovieEntity(id, title, year, duration, rating, genre, synopsis, banner, trailer)
                 list.add(movieResponse)
             }
         } catch (e: JSONException) {
@@ -50,8 +51,8 @@ class JSONHelper(private val context: Context) {
         return list
     }
 
-    fun loadTVShow(): List<TVShow> {
-        val list = ArrayList<TVShow>()
+    fun loadTVShow(): List<TVShowEntity> {
+        val list = ArrayList<TVShowEntity>()
         try {
             val responseObject = JSONObject(parsingFileToString("tvShows.json").toString())
             val listArray = responseObject.getJSONArray("tvShows")
@@ -68,7 +69,7 @@ class JSONHelper(private val context: Context) {
                 val banner = movie.getString("banner")
                 val trailer = movie.getString("trailer")
 
-                val tvShowResponse = TVShow(id, title, year, duration, rating, genre, synopsis, banner, trailer)
+                val tvShowResponse = TVShowEntity(id, title, year, duration, rating, genre, synopsis, banner, trailer)
                 list.add(tvShowResponse)
             }
         } catch (e: JSONException) {
@@ -77,9 +78,9 @@ class JSONHelper(private val context: Context) {
         return list
     }
 
-    fun loadMovieDetail(movieId : Int): Movie {
+    fun loadMovieDetail(movieId : Int): MovieEntity {
         val fileName = String.format("movie_%s.json", movieId)
-        var list : Movie? = null
+        var list : MovieEntity? = null
         try {
             val result = parsingFileToString(fileName)
             if (result != null) {
@@ -93,17 +94,17 @@ class JSONHelper(private val context: Context) {
                 val synopsis = movie.getString("synopsis")
                 val banner = movie.getString("banner")
                 val trailer = movie.getString("trailer")
-                list = Movie(id, title, year, duration, rating, genre, synopsis, banner, trailer)
+                list = MovieEntity(id, title, year, duration, rating, genre, synopsis, banner, trailer)
             }
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        return list as Movie
+        return list as MovieEntity
     }
 
-    fun loadTVShowDetail(tvShowId : Int): TVShow {
+    fun loadTVShowDetail(tvShowId : Int): TVShowEntity {
         val fileName = String.format("tvShow_%s.json", tvShowId)
-        var list : TVShow? = null
+        var list : TVShowEntity? = null
         try {
             val result = parsingFileToString(fileName)
             if (result != null) {
@@ -117,11 +118,11 @@ class JSONHelper(private val context: Context) {
                 val synopsis = movie.getString("synopsis")
                 val banner = movie.getString("banner")
                 val trailer = movie.getString("trailer")
-                list = TVShow(id, title, year, duration, rating, genre, synopsis, banner, trailer)
+                list = TVShowEntity(id, title, year, duration, rating, genre, synopsis, banner, trailer)
             }
         } catch (e: JSONException) {
             e.printStackTrace()
         }
-        return list as TVShow
+        return list as TVShowEntity
     }
 }
