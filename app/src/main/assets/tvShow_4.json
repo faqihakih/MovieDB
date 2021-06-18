@@ -1,0 +1,11 @@
+ {
+     "id" : 4,
+     "title" : "The Walking Dead",
+     "year" : "2010",
+     "duration" : "42m",
+     "rating" : "8.1",
+     "genre" : "Action & Adventure, Drama, Sci-Fi & Fantasy",
+     "synopsis" : "Sheriff's deputy Rick Grimes awakens from a coma to find a post-apocalyptic world dominated by flesh-eating zombies. He sets out to find his family and encounters many other survivors along the way.",
+     "banner" : "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/rqeYMLryjcawh2JeRpCVUDXYM5b.jpg",
+     "trailer" : "https://youtu.be/R1v0uFms68U"
+  }

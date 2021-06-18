@@ -1,0 +1,11 @@
+{
+    "id" : 5,
+    "title" : "Game of Thrones",
+    "year" : "2011",
+    "duration" : "1h",
+    "rating" : "8.4",
+    "genre" : "Sci-Fi & Fantasy, Drama, Action & Adventure",
+    "synopsis" : "Seven noble families fight for control of the mythical land of Westeros. Friction between the houses leads to full-scale war. All while a very ancient evil awakens in the farthest north. Amidst the war, a neglected military order of misfits, the Night's Watch, is all that stands between the realms of men and icy horrors beyond.",
+    "banner" : "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/rqeYMLryjcawh2JeRpCVUDXYM5b.jpg",
+    "trailer" : "https://youtu.be/bjqEWgDVPe0"
+}

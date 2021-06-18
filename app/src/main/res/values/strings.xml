@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MovieDB</string>
+    <string name="netflix">NETFLIX</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movieTitle">Movie</string>
+    <string name="tvShowTitle">TV Show</string>
+    <string name="watch_trailer">Watch Trailer</string>
+    <string name="sinopsis">Jim Hanson’s quiet life is suddenly disturbed by two people crossing the US/Mexico border – a woman and her young son – desperate to flee a Mexican cartel. After a shootout leaves the mother dead, Jim becomes the boy’s reluctant defender. He embraces his role as Miguel’s protector and will stop at nothing to get him to safety, as they go on the run from the relentless assassins.</string>
+    <string name="sinopsisTitle">Synopsis :</string>
+    <string name="genre">Genre</string>
+    <string name="tahun">(2020)</string>
+    <string name="rating">Rating</string>
+    <string name="durasi_movie">Durasi Movie</string>
+    <string name="title">Ini Title</string>
+    <string name="desc_img">Poster Movie</string>
+    <string name="favofite">Favofite</string>
+</resources>

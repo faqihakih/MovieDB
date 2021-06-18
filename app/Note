@@ -1,0 +1,54 @@
+Unit Testing :
+    MovieViewModelTest:
+        Memuat Movie:
+            Memanipulasi data movie dari movieRepository
+            Memastikan data movie tidak null.
+            Memastikan jumlah data movie sesuai dengan yang diharapkan.
+            Memastikan fungsi live data berjalan jika terjadi perubahan
+    TVShowViewModelTest:
+        Memuat TVShow:
+            Memanipulasi data tvShow dari movieRepository.
+            Memastikan data tvShow tidak null.
+            Memastikan jumlah data tvShow sesuai dengan yang diharapkan.
+            Memastikan fungsi live data berjalan jika terjadi perubahan.
+    DetailMovieViewModelTest:
+        Memuat Movie:
+            Memanipulasi data Movie Detail dari movieRepository, kemudia diambil dari di index ke 0 untuk pengujian.
+            Memastikan data movie tidak null.
+            Memastikan data movie sesuai dengan yang diharapkan.
+    DetailTVShowViewModelTest:
+        Memuat TVShow:
+            Memanipulasi data TVShow Detail dari movieRepository, kemudia diambil dari di index ke 0 untuk pengujian.
+            Memastikan data tvShow tidak null.
+            Memastikan data tvShow sesuai dengan yang diharapkan.
+     MovieRepositoryTest:
+        Memastikan ada perubahan data di dalam LiveData sesuai yang diharapkan.
+        Memastikan data yang ada di dalam Livedata sesuai yang diharapkan.
+
+Instrumental Testing :
+    Menampilkan data Movie :
+        Memastikan rv_movie dalam keadaan tampil.
+        Gulir rv_movie ke posisi data terakhir.
+    Menampilkan data detail movie :
+        Memberi tindakan klik pada data pertama di rv_movie.
+        Memastikan TextView untuk title tampil sesuai dengan yang diharapkan.
+        Memastikan TextView untuk duration tampil sesuai dengan yang diharapkan.
+        Memastikan TextView untuk rating tampil sesuai dengan yang diharapkan.
+        Memastikan TextView untuk genre tampil sesuai dengan yang diharapkan.
+        Memastikan TextView untuk synopsis tampil sesuai dengan yang diharapkan.
+    Menampilkan trailer movie :
+        Memberi tindakan klik pada data pertama di rv_movie.
+        Memberi tindakan klik pada btn_trailer.
+    Menampilkan data TV Show :
+        Memastikan rv_tv_show dalam keadaan tampil.
+        Gulir rv_tv_show ke posisi data terakhir.
+    Menampilkan data detail tv show :
+        Memberi tindakan klik pada data pertama di rv_tv_show.
+        Memastikan TextView untuk title tampil sesuai dengan yang diharapkan.
+        Memastikan TextView untuk duration tampil sesuai dengan yang diharapkan.
+        Memastikan TextView untuk rating tampil sesuai dengan yang diharapkan.
+        Memastikan TextView untuk genre tampil sesuai dengan yang diharapkan.
+        Memastikan TextView untuk synopsis tampil sesuai dengan yang diharapkan.
+    Menampilkan trailer tv show :
+        Memberi tindakan klik pada data pertama di rv_tv_show.
+        Memberi tindakan klik pada btn_trailer.
