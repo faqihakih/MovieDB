@@ -1,13 +1,13 @@
 package com.akih.moviedb.utils
 
-import com.akih.moviedb.data.source.remote.response.MovieResponse
-import com.akih.moviedb.data.source.remote.response.TVShowResponse
+import com.akih.moviedb.data.source.local.entity.MovieEntity
+import com.akih.moviedb.data.source.local.entity.TVShowEntity
 
 object DummyData {
-    fun fetchAllMovie():ArrayList<MovieResponse>{
-        val movies = ArrayList<MovieResponse>()
+    fun fetchAllMovie():ArrayList<MovieEntity>{
+        val movies = ArrayList<MovieEntity>()
         movies.add(
-                MovieResponse(
+                MovieEntity(
                         1,
                         "Mortal Kombat",
                         "2021",
@@ -20,7 +20,7 @@ object DummyData {
                 )
         )
         movies.add(
-                MovieResponse(
+                MovieEntity(
                         2,
                         "Zack Snyder's Justice League",
                         "2021",
@@ -33,7 +33,7 @@ object DummyData {
                 )
         )
         movies.add(
-                MovieResponse(
+                MovieEntity(
                         3,
                         "Nobody",
                         "2021",
@@ -46,7 +46,7 @@ object DummyData {
                 )
         )
         movies.add(
-                MovieResponse(
+                MovieEntity(
                         4,
                         "The Marksman",
                         "2021",
@@ -59,7 +59,7 @@ object DummyData {
                 )
         )
         movies.add(
-                MovieResponse(
+                MovieEntity(
                         5,
                         "Chaos Walking",
                         "2021",
@@ -72,7 +72,7 @@ object DummyData {
                 )
         )
         movies.add(
-                MovieResponse(
+                MovieEntity(
                         6,
                         "Wonder Woman 1984",
                         "2020",
@@ -85,7 +85,7 @@ object DummyData {
                 )
         )
         movies.add(
-                MovieResponse(
+                MovieEntity(
                         7,
                         "The Little Things",
                         "2021",
@@ -98,7 +98,7 @@ object DummyData {
                 )
         )
         movies.add(
-                MovieResponse(
+                MovieEntity(
                         8,
                         "Honest Thief",
                         "2020",
@@ -111,7 +111,7 @@ object DummyData {
                 )
         )
         movies.add(
-                MovieResponse(
+                MovieEntity(
                         9,
                         "Joker",
                         "2019",
@@ -124,7 +124,7 @@ object DummyData {
                 )
         )
         movies.add(
-                MovieResponse(
+                MovieEntity(
                         10,
                         "Sherlock Holmes: A Game of Shadows",
                         "2011",
@@ -139,11 +139,11 @@ object DummyData {
         return movies
     }
 
-    fun fetchAllTVShow() : ArrayList<TVShowResponse>{
-        val tvShows = ArrayList<TVShowResponse>()
+    fun fetchAllTVShow() : ArrayList<TVShowEntity>{
+        val tvShows = ArrayList<TVShowEntity>()
 
         tvShows.add(
-                TVShowResponse(
+                TVShowEntity(
                         1,
                         "The Falcon and the Winter Soldier",
                         "2021",
@@ -156,7 +156,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShowResponse(
+                TVShowEntity(
                         2,
                         "The Good Doctor",
                         "2017",
@@ -169,7 +169,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShowResponse(
+                TVShowEntity(
                         3,
                         "WandaVision",
                         "2021",
@@ -182,7 +182,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShowResponse(
+                TVShowEntity(
                         4,
                         "The Walking Dead",
                         "2010",
@@ -195,7 +195,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShowResponse(
+                TVShowEntity(
                         5,
                         "Game of Thrones",
                         "2011",
@@ -208,7 +208,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShowResponse(
+                TVShowEntity(
                         6,
                         "Marvel Studios: Legends",
                         "2021",
@@ -221,7 +221,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShowResponse(
+                TVShowEntity(
                         7,
                         "I Am...",
                         "2019",
@@ -234,7 +234,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShowResponse(
+                TVShowEntity(
                         8,
                         "Elite",
                         "2018",
@@ -247,7 +247,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShowResponse(
+                TVShowEntity(
                         9,
                         "Peaky Blinders",
                         "2013",
@@ -260,7 +260,7 @@ object DummyData {
                 )
         )
         tvShows.add(
-                TVShowResponse(
+                TVShowEntity(
                         10,
                         "Sherlock",
                         "2010",
@@ -273,5 +273,42 @@ object DummyData {
                 )
         )
         return tvShows
+    }
+
+    fun fetchAllMovieDetail(moviesId: Int): MovieEntity{
+        return fetchAllMovie()[0]
+    }
+
+    fun fetchAllShowDetail(tvShowId: Int): TVShowEntity{
+        return fetchAllTVShow()[0]
+    }
+
+    fun fetchAllMovieDetailFavorite(movies: MovieEntity, bookmarked: Boolean): MovieEntity {
+        return MovieEntity(
+                movies.id,
+                movies.title,
+                movies.year,
+                movies.duration,
+                movies.rating,
+                movies.genre,
+                movies.synopsis,
+                movies.banner,
+                movies.trailer,
+                movies.favorite)
+    }
+
+    fun fetchAllShowDetailFavorite(tvShow: TVShowEntity, bookmarked: Boolean): TVShowEntity{
+        return TVShowEntity(
+                tvShow.id,
+                tvShow.title,
+                tvShow.year,
+                tvShow.duration,
+                tvShow.rating,
+                tvShow.genre,
+                tvShow.synopsis,
+                tvShow.banner,
+                tvShow.trailer,
+                tvShow.favorite
+        )
     }
 }

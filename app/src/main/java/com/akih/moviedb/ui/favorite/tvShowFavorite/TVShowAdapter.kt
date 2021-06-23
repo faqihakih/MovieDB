@@ -51,4 +51,12 @@ class TVShowAdapter(private val tvShowAdapterInterface: TVShowAdapterInterface) 
         }
     }
 
+    private var tvList = ArrayList<TVShowEntity>()
+
+    fun setTvValue(tv:List<TVShowEntity>){
+        if(tv != null)return
+        this.tvList.clear()
+        this.tvList.addAll(tv)
+    }
+
 }

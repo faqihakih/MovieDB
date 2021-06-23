@@ -3,9 +3,12 @@ package com.akih.moviedb.ui.movie
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.akih.moviedb.data.MovieRepository
+import com.akih.moviedb.data.source.local.entity.MovieEntity
 import com.akih.moviedb.data.source.remote.response.MovieResponse
 import com.akih.moviedb.utils.DummyData
+import com.akih.moviedb.vo.Resource
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import org.junit.Before
@@ -26,10 +29,12 @@ class MovieViewModelTest {
     @Mock
     private lateinit var movieRepository: MovieRepository
 
-
+    @Mock
+    private lateinit var observer: Observer<Resource<PagedList<MovieEntity>>>
 
     @Mock
-    private lateinit var observer: Observer<List<MovieResponse>>
+    private lateinit var pagedList: PagedList<MovieEntity>
+
     @Before
     fun setUp(){
         viewModel = MovieViewModel(movieRepository)
@@ -37,12 +42,13 @@ class MovieViewModelTest {
 
     @Test
     fun testGetAllMovie() {
-        val dummyData = DummyData.fetchAllMovie()
-        val mMovie = MutableLiveData<List<MovieResponse>>()
+        val dummyData = Resource.success(pagedList)
+        Mockito.`when`(dummyData.data?.size).thenReturn(10)
+        val mMovie = MutableLiveData<Resource<PagedList<MovieEntity>>>()
         mMovie.value = dummyData
 
         Mockito.`when`(movieRepository.getAllMovie()).thenReturn(mMovie)
-        val movies = viewModel.getAllMovie().value
+        val movies = viewModel.getAllMovie().value?.data
         Mockito.verify(movieRepository).getAllMovie()
 
         viewModel.getAllMovie().observeForever(observer)

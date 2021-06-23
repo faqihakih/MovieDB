@@ -47,4 +47,12 @@ class MovieAdapter(private val movieAdapterInterface: MovieAdapterInterface) : P
             holder.bind(movies)
         }
     }
+
+    private var movieList = ArrayList<MovieEntity>()
+
+    fun setValueMovie(movie:List<MovieEntity>){
+        if(movie != null)return
+        this.movieList.clear()
+        this.movieList.addAll(movie)
+    }
 }

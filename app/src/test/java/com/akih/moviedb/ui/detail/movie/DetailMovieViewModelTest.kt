@@ -4,8 +4,10 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.akih.moviedb.data.MovieRepository
+import com.akih.moviedb.data.source.local.entity.MovieEntity
 import com.akih.moviedb.data.source.remote.response.MovieResponse
 import com.akih.moviedb.utils.DummyData
+import com.akih.moviedb.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
@@ -31,7 +33,7 @@ class DetailMovieViewModelTest{
     lateinit var movieRepository: MovieRepository
 
     @Mock
-    private lateinit var movieObserver: Observer<MovieResponse>
+    private lateinit var movieObserver: Observer<Resource<MovieEntity>>
 
     @Before
     fun setUp(){
@@ -41,23 +43,24 @@ class DetailMovieViewModelTest{
 
     @Test
     fun getMovie(){
-        val mMovie = MutableLiveData<MovieResponse>()
-        mMovie.value = dummyMovie
+        val mMovie = Resource.success(DummyData.fetchAllMovieDetailFavorite(dummyMovie, true))
+        val movies = MutableLiveData<Resource<MovieEntity>>()
+        movies.value = mMovie
+        Mockito.`when`(movieRepository.getMovieDetail(movieId)).thenReturn(movies)
+        viewModel.getMovie.observeForever(movieObserver)
+        verify(movieObserver).onChanged(mMovie)
+    }
 
+    @Test
+    fun setFavMovies(){
+        val mMovie = MutableLiveData<Resource<MovieEntity>>()
+        mMovie.value = Resource.success(DummyData.fetchAllMovieDetailFavorite(dummyMovie, true))
         Mockito.`when`(movieRepository.getMovieDetail(movieId)).thenReturn(mMovie)
-        val dataMovie = viewModel.getMovie().value as MovieResponse
-        verify(movieRepository).getMovieDetail(movieId)
-        viewModel.getMovie().observeForever(movieObserver)
-        verify(movieObserver).onChanged(dummyMovie)
-        assertNotNull(dataMovie)
-        assertEquals(dummyMovie.id, dataMovie.id)
-        assertEquals(dummyMovie.title, dataMovie.title)
-        assertEquals(dummyMovie.year, dataMovie.year)
-        assertEquals(dummyMovie.duration, dataMovie.duration)
-        assertEquals(dummyMovie.rating, dataMovie.rating)
-        assertEquals(dummyMovie.genre, dataMovie.genre)
-        assertEquals(dummyMovie.synopsis, dataMovie.synopsis)
-        assertEquals(dummyMovie.banner, dataMovie.banner)
-        assertEquals(dummyMovie.trailer, dataMovie.trailer)
+        viewModel.setFavoritMovie()
+        viewModel.getMovie.observeForever(movieObserver)
+        verify(movieObserver).onChanged(mMovie.value)
+        val valueExp = mMovie.value
+        val valueAct = viewModel.getMovie.value
+        assertEquals(valueExp, valueAct)
     }
 }

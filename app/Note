@@ -21,6 +21,16 @@ Unit Testing :
             Memanipulasi data TVShow Detail dari movieRepository, kemudia diambil dari di index ke 0 untuk pengujian.
             Memastikan data tvShow tidak null.
             Memastikan data tvShow sesuai dengan yang diharapkan.
+    FavoriteMovieViewModelTest:
+        Memuat Movie:
+            Memanipulasi data movie dari movieRepository
+            Memastikan data movie favorite tidak null.
+            Memastikan data movie favorite sesuai dengan yang diharapkan.
+    FavoriteShowViewModelTest:
+        Memuat Show:
+            Memanipulasi data tb show dari movieRepository
+            Memastikan data tvShow favorite tidak null.
+            Memastikan data tvShow favorite sesuai dengan yang diharapkan.
      MovieRepositoryTest:
         Memastikan ada perubahan data di dalam LiveData sesuai yang diharapkan.
         Memastikan data yang ada di dalam Livedata sesuai yang diharapkan.
@@ -39,6 +49,13 @@ Instrumental Testing :
     Menampilkan trailer movie :
         Memberi tindakan klik pada data pertama di rv_movie.
         Memberi tindakan klik pada btn_trailer.
+    Tombol Favorite :
+        Memberi tindakan klik pada data pertama di rv_movie.
+        Memberi tindakan klik pada toggel button favorite
+    Menampilkan data Movie Favorite :
+        Memberi tindakan pada tombol fav.
+        Memastikan rv_movie dalam keadaan tampil.
+        Gulir rv_movie ke posisi data terakhir.
     Menampilkan data TV Show :
         Memastikan rv_tv_show dalam keadaan tampil.
         Gulir rv_tv_show ke posisi data terakhir.
@@ -52,3 +69,10 @@ Instrumental Testing :
     Menampilkan trailer tv show :
         Memberi tindakan klik pada data pertama di rv_tv_show.
         Memberi tindakan klik pada btn_trailer.
+    Tombol Favorite :
+        Memberi tindakan klik pada data pertama di rv_tv_show.
+        Memberi tindakan klik pada toggel button favorite
+    Menampilkan data TVShow Favorite :
+        Memberi tindakan pada tombol fav.
+        Memastikan rv_tv_show dalam keadaan tampil.
+        Gulir rv_tv_show ke posisi data terakhir.

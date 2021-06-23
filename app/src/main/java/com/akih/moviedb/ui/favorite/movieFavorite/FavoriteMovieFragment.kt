@@ -39,6 +39,7 @@ class FavoriteMovieFragment : Fragment(), MovieAdapterInterface {
         viewModel = ViewModelProvider(this, factory)[FavoriteMovieViewModel::class.java]
         var adapterMovie = MovieAdapter(this@FavoriteMovieFragment)
         viewModel.getFavorite().observe(viewLifecycleOwner, {movie ->
+            adapterMovie.setValueMovie(movie)
             adapterMovie.submitList(movie)
             adapterMovie.notifyDataSetChanged()
         })

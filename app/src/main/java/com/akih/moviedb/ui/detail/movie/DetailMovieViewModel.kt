@@ -23,7 +23,7 @@ class DetailMovieViewModel (private val movieRepository: MovieRepository) : View
         if(favorite != null){
             val idMovie = favorite.data
             if(idMovie != null){
-                val value = !idMovie.favorite
+                val value = idMovie.favorite
                 movieRepository.setFavMovie(idMovie, value)
             }
         }

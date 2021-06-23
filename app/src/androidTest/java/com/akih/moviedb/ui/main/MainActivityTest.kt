@@ -1,10 +1,14 @@
 package com.akih.moviedb.ui.main
 
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.akih.moviedb.R
@@ -47,6 +51,20 @@ class MainActivityTest{
     }
 
     @Test
+    fun pressMovieFav(){
+        onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_movie)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+        onView(withId(R.id.toggleButton)).perform(click())
+    }
+
+    @Test
+    fun loadFavoriteMovie() {
+        onView(withId(R.id.btn_fav)).perform(click())
+        onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_movie)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(dummyData.size))
+    }
+
+    @Test
     fun loadTVShow(){
         onView(withText("TV Show")).perform(click())
         onView(withId(R.id.rv_tv_show)).check(matches(isDisplayed()))
@@ -74,5 +92,21 @@ class MainActivityTest{
         onView(withText("TV Show")).perform(click())
         onView(withId(R.id.rv_tv_show)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
         onView(withId(R.id.btn_trailer)).perform(click())
+    }
+
+    @Test
+    fun pressShowFav(){
+        onView(withText("TV Show")).perform(click())
+        onView(withId(R.id.rv_tv_show)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_tv_show)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+        onView(withId(R.id.toggleButton)).perform(click())
+    }
+
+    @Test
+    fun loadFavoriteShow() {
+        onView(withId(R.id.btn_fav)).perform(click())
+        onView(withText("TV Show")).perform(click())
+        onView(withId(R.id.rv_tv_show)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_tv_show)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(dummyDataTVShow.size))
     }
 }

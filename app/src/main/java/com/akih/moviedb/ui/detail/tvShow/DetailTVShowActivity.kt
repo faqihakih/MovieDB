@@ -5,25 +5,24 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.akih.moviedb.R
 import com.akih.moviedb.data.source.local.entity.TVShowEntity
 import com.akih.moviedb.databinding.ActivityDetailTVShowBinding
-import com.akih.moviedb.ui.detail.movie.DetailMovieActivity
 import com.akih.moviedb.vo.Resource
 import com.akih.moviedb.vo.Status
 import com.akih.moviedb.viewModel.ViewModelFactory
 import com.bumptech.glide.Glide
 
-class DetailTVShowActivity : AppCompatActivity() {
+class DetailTVShowActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityDetailTVShowBinding
     private lateinit var viewModel: DetailTVShowViewModel
     private lateinit var factory: ViewModelFactory
-    private lateinit var tvShowEntity: TVShowEntity
     private var setFavorite : ToggleButton? = null
-    private var stateFavorite: Boolean = false
 
     companion object{
         const val EXTRA_ID = "extra_id"
@@ -35,8 +34,8 @@ class DetailTVShowActivity : AppCompatActivity() {
         setContentView(binding.root)
         initViewModel()
         getId()
-        setFavoriteOnClick()
         observe()
+        binding.toggleButton.setOnClickListener(this)
     }
 
     private fun initViewModel(){
@@ -45,38 +44,38 @@ class DetailTVShowActivity : AppCompatActivity() {
     }
 
     private fun observe(){
-        viewModel.getTVShow.observe(this, Observer { setFav(it) })
         viewModel.getTVShow.observe(this, Observer { watchTrailer(it) })
     }
 
     private fun getId(){
         val id = intent.extras
         if (id != null){
-            val data = id.getInt(DetailMovieActivity.EXTRA_ID, 0)
-            viewModel.setSelectedTVShow(data)
-        }
-    }
-
-    private fun setFav(movie: Resource<TVShowEntity>) {
-        if(movie != null){
-            when(movie.status){
-                Status.SUCCESS -> if(movie.data != null){
-                    tvShowEntity = movie.data
-                    initView(tvShowEntity)
-                    if(movie.data.favorite == true){
-                        setFavorite = binding.toggleButton
-                        setFavorite!!.isChecked = true
-                    }else{
-                        setFavorite = binding.toggleButton
-                        setFavorite!!.isChecked = false
+            val data = id.getInt(DetailTVShowActivity.EXTRA_ID, 0)
+            if(data != null){
+                viewModel.setSelectedTVShow(data)
+                viewModel.getTVShow.observe(this, {tv ->
+                    if(tv != null){
+                        when(tv.status){
+                            Status.SUCCESS -> if(tv.data != null){
+                                initView(tv.data)
+                                if(tv.data.favorite == true){
+                                    setFavorite = binding.toggleButton
+                                    setFavorite!!.isChecked = true
+                                }else{
+                                    setFavorite = binding.toggleButton
+                                    setFavorite!!.isChecked = false
+                                }
+                            }
+                            Status.ERROR ->{
+                                Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
-                }
-                Status.ERROR ->{
-                    Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT).show()
-                }
+                })
             }
         }
     }
+
 
     @SuppressLint("SetTextI18n")
     private fun initView(itemData: TVShowEntity){
@@ -90,26 +89,6 @@ class DetailTVShowActivity : AppCompatActivity() {
         }
     }
 
-    private fun setFavoriteOnClick(){
-        viewModel.getTVShow.observe(this, {movie ->
-            if (movie != null) {
-                when (movie.status) {
-                    Status.SUCCESS -> if (movie.data != null) {
-                        if(movie.data.favorite == false){
-                            setFavorit(true)
-                        }else{
-                            setFavorit(false)
-                        }
-                    }
-                    Status.ERROR -> {
-                        Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-            }
-        })
-        viewModel.setFavoritShow()
-    }
 
     private fun setFavorit(stateFavorit: Boolean) {
         if(setFavorite == null)return
@@ -123,7 +102,34 @@ class DetailTVShowActivity : AppCompatActivity() {
 
     private fun watchTrailer(itemData: Resource<TVShowEntity>){
         binding.btnTrailer.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(tvShowEntity.trailer)))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(itemData.data?.trailer)))
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.toggleButton ->{
+                viewModel.getTVShow.observe(this, {tv ->
+                    if (tv != null) {
+                        when (tv.status) {
+                            Status.SUCCESS -> if (tv.data != null) {
+                                if(tv.data.favorite == false){
+                                    tv.data.favorite = true
+                                    setFavorit(tv.data.favorite)
+                                }else{
+                                    tv.data.favorite = false
+                                    setFavorit(tv.data.favorite)
+                                }
+                            }
+                            Status.ERROR -> {
+                                Toast.makeText(applicationContext, "Error", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
+                    }
+                })
+                viewModel.setFavoritShow()
+            }
         }
     }
 }

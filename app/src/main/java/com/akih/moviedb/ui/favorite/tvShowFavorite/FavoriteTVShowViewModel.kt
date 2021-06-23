@@ -7,7 +7,7 @@ import com.akih.moviedb.data.MovieRepository
 import com.akih.moviedb.data.source.local.entity.TVShowEntity
 
 class FavoriteTVShowViewModel(private val repository: MovieRepository): ViewModel(){
-    fun getFavorit(): LiveData<PagedList<TVShowEntity>> {
+    fun getFavorite(): LiveData<PagedList<TVShowEntity>> {
         return repository.getFavTVShow()
     }
 }

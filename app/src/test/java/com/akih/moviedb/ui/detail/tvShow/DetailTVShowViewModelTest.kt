@@ -4,8 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.akih.moviedb.data.MovieRepository
+import com.akih.moviedb.data.source.local.entity.MovieEntity
+import com.akih.moviedb.data.source.local.entity.TVShowEntity
 import com.akih.moviedb.data.source.remote.response.TVShowResponse
 import com.akih.moviedb.utils.DummyData
+import com.akih.moviedb.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
 import junit.framework.TestCase
 import org.junit.Before
@@ -30,7 +33,7 @@ class DetailTVShowViewModelTest {
     lateinit var movieRepository: MovieRepository
 
     @Mock
-    private lateinit var tvObserver: Observer<TVShowResponse>
+    private lateinit var tvObserver: Observer<Resource<TVShowEntity>>
 
     @Before
     fun setUp() {
@@ -40,23 +43,24 @@ class DetailTVShowViewModelTest {
     
     @Test
     fun getTVShow(){
-        val mTv = MutableLiveData<TVShowResponse>()
-        mTv.value = dummyTVShow
+        val mShow = Resource.success(DummyData.fetchAllShowDetailFavorite(dummyTVShow, true))
+        val show = MutableLiveData<Resource<TVShowEntity>>()
+        show.value = mShow
+        Mockito.`when`(movieRepository.getTVShowDetail(tvShowId)).thenReturn(show)
+        viewModel.getTVShow.observeForever(tvObserver)
+        verify(tvObserver).onChanged(mShow)
+    }
 
-        Mockito.`when`(movieRepository.getTVShowDetail(tvShowId)).thenReturn(mTv)
-        val dataTVShow = viewModel.getTVShow().value as TVShowResponse
-        verify(movieRepository).getTVShowDetail(tvShowId)
-        viewModel.getTVShow().observeForever(tvObserver)
-        verify(tvObserver).onChanged(dummyTVShow)
-        TestCase.assertNotNull(dataTVShow)
-        TestCase.assertEquals(dummyTVShow.id, dataTVShow.id)
-        TestCase.assertEquals(dummyTVShow.title, dataTVShow.title)
-        TestCase.assertEquals(dummyTVShow.year, dataTVShow.year)
-        TestCase.assertEquals(dummyTVShow.duration, dataTVShow.duration)
-        TestCase.assertEquals(dummyTVShow.rating, dataTVShow.rating)
-        TestCase.assertEquals(dummyTVShow.genre, dataTVShow.genre)
-        TestCase.assertEquals(dummyTVShow.synopsis, dataTVShow.synopsis)
-        TestCase.assertEquals(dummyTVShow.banner, dataTVShow.banner)
-        TestCase.assertEquals(dummyTVShow.trailer, dataTVShow.trailer)
+    @Test
+    fun setFavMovies(){
+        val mShow = MutableLiveData<Resource<TVShowEntity>>()
+        mShow.value = Resource.success(DummyData.fetchAllShowDetailFavorite(dummyTVShow, true))
+        Mockito.`when`(movieRepository.getTVShowDetail(tvShowId)).thenReturn(mShow)
+        viewModel.setFavoritShow()
+        viewModel.getTVShow.observeForever(tvObserver)
+        verify(tvObserver).onChanged(mShow.value)
+        val valueExp = mShow.value
+        val valueAct = viewModel.getTVShow.value
+        TestCase.assertEquals(valueExp, valueAct)
     }
 }

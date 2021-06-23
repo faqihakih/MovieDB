@@ -37,8 +37,9 @@ class FavoriteTVShowFragment : Fragment(), TVShowAdapterInterface {
         factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(this, factory)[FavoriteTVShowViewModel::class.java]
         var adapterShow = TVShowAdapter(this@FavoriteTVShowFragment)
-        viewModel.getFavorit().observe(viewLifecycleOwner, {movie ->
-            adapterShow.submitList(movie)
+        viewModel.getFavorite().observe(viewLifecycleOwner, {tv ->
+            adapterShow.setTvValue(tv)
+            adapterShow.submitList(tv)
             adapterShow.notifyDataSetChanged()
         })
 
